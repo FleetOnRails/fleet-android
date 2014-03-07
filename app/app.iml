@@ -78,7 +78,6 @@
     <orderEntry type="library" exported="" name="obd-java-api-0.3" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.0.1" level="project" />
     <orderEntry type="library" exported="" name="androidannotations-api-3.0.1" level="project" />
-    <orderEntry type="library" exported="" name="rxjava-core-0.16.1" level="project" />
   </component>
 </module>
 
