@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="OBD Preferences">
+
+        <EditTextPreference
+            android:key="oauth_client_id"
+            android:defaultValue="0a53466ed458c313ba5ee4d555b3e5a8ab76c36a66adbfcd3af54bd3ed1cec02"
+            android:title="Client ID"
+            android:summary="Client ID for OAuth"
+            android:dialogTitle="Client ID for OAuth" />
+
+        <EditTextPreference
+            android:key="oauth_client_secret"
+            android:defaultValue="86438505b551e5ee6882449041ba74c4e00cb2ad2107ad0eddfce7838993136e"
+            android:title="Client Secret"
+            android:summary="Client Secret for OAuth"
+            android:dialogTitle="Client Secret for OAuth" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

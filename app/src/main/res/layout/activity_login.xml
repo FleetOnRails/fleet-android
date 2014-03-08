@@ -9,18 +9,36 @@
     tools:context="eu.fleetonrails.android.app.MainActivity$PlaceholderFragment">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <TextView
-            android:text="@string/hello_world"
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView" />
-    </LinearLayout>
+            android:id="@+id/username"
+            android:layout_gravity="center_horizontal"
+            android:hint="username" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/password"
+            android:hint="password" />
+
+        <Button
+            android:layout_width="325dp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:id="@+id/login_button"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:enabled="true"
+            android:onClick="sendLogin" />
+    </LinearLayout>
 </RelativeLayout>

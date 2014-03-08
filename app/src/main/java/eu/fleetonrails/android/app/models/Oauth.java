@@ -1,9 +1,9 @@
-package eu.fleetonrails.android.app.model.network.oauth;
+package eu.fleetonrails.android.app.models;
 
 /**
- * Created by alan on 07/03/2014.
+ * Created by alan on 08/03/2014.
  */
-public class OauthCallback {
+public class Oauth {
     public String access_token;
     public String token_type;
     public int expires_in;
@@ -41,3 +41,20 @@ public class OauthCallback {
         this.refresh_token = refresh_token;
     }
 }
+
+//public class OauthCredential {
+//    public String grant_type;
+//    public String client_id;
+//    public String client_secret;
+//    public String username;
+//    public String password;
+//
+//    public OauthCredential(String username, String password) {
+//        this.grant_type = "password";
+//        this.client_id = super.client_id;
+//        this.client_secret = super.client_secret;
+//        this.username = username;
+//        this.password = password;
+//    }
+//}
+
