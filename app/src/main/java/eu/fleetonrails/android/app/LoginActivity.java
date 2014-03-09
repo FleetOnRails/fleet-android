@@ -1,32 +1,18 @@
 package eu.fleetonrails.android.app;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import org.androidannotations.annotations.Background;
-
-import eu.fleetonrails.android.app.models.Oauth;
-import eu.fleetonrails.android.app.models.me.MeAttributes;
-import eu.fleetonrails.android.app.models.me.MeObject;
-import eu.fleetonrails.android.app.services.network.MeService;
-import eu.fleetonrails.android.app.services.network.OauthService;
-import retrofit.Callback;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
+import eu.fleetonrails.android.app.utils.network.LoginUtil;
+import eu.fleetonrails.android.app.utils.network.MeUtil;
 
 public class LoginActivity extends ActionBarActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -34,7 +20,6 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,86 +41,19 @@ public class LoginActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Background
-    public void getMe() {
-        SharedPreferences fleetPreferences = getSharedPreferences("FleetPreferences", MODE_PRIVATE);
-        final String bearer = fleetPreferences.getString("AccessToken", "");
-
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
-            @Override
-            public void intercept(RequestFacade request) {
-                request.addHeader("Authorization", "Bearer " + bearer);
-                request.addHeader("Accept", "application/json");
-                request.addHeader("Content-Type", "application/json");
-            }
-        };
-
-        RestAdapter restAdapter;
-        restAdapter = new RestAdapter.Builder()
-                .setServer(MeService.serverPath)
-                .setRequestInterceptor(requestInterceptor)
-                .build();
-
-        MeService service = restAdapter.create(MeService.class);
-        service.getData(new Callback<MeObject>() {
-            @Override
-            public void success(MeObject meObject, Response response) {
-                MeAttributes me = meObject.me; // Get first element from arraylist
-
-                Log.d("me pojo", me.id + ", " + me.first_name);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Error", error.toString());
-            }
-        });
-    }
 
     public void sendLogin(View view) {
         Intent intent = new Intent(this, MainActivity.class);
-        EditText usernameText = (EditText) findViewById(R.id.username);
-        EditText passwordText = (EditText) findViewById(R.id.password);
 
-        String username = usernameText.getText().toString();
-        String password = passwordText.getText().toString();
+        EditText uiUsername = (EditText) findViewById(R.id.username);
+        EditText uiPassword = (EditText) findViewById(R.id.password);
 
-        login(username, password);
-        getMe();
+        String username = uiUsername.getText().toString();
+        String password = uiPassword.getText().toString();
+
+        LoginUtil.login(LoginActivity.this, username, password);
+        MeUtil.index(LoginActivity.this);
 
         startActivity(intent);
     }
-
-    @Background
-    public void login(String username, String password) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
-        RestAdapter restAdapter;
-        restAdapter = new RestAdapter.Builder()
-                .setServer(OauthService.serverPath)
-                .build();
-
-        OauthService oauthService = restAdapter.create(OauthService.class);
-
-        oauthService.getBearerFromCredentials("password", prefs.getString("oauth_client_id", ""),
-                prefs.getString("oauth_client_secret", ""), username, password, new Callback<Oauth>() {
-                    @Override
-                    public void success(Oauth oauth, Response response) {
-                        SharedPreferences fleetPreferences = getSharedPreferences("FleetPreferences", MODE_PRIVATE);
-                        SharedPreferences.Editor prefEditor = fleetPreferences.edit();
-                        prefEditor.putString("AccessToken", oauth.getAccess_token());
-                        prefEditor.commit();
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.d("error", error.toString());
-                    }
-                }
-        );
-
-        SharedPreferences fleetPreferences = getSharedPreferences("FleetPreferences", MODE_PRIVATE);
-        Log.d("Bearer ", fleetPreferences.getString("AccessToken", ""));
-    }
-
 }

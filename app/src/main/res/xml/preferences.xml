@@ -18,6 +18,13 @@
             android:summary="Client Secret for OAuth"
             android:dialogTitle="Client Secret for OAuth" />
 
+        <EditTextPreference
+            android:key="base_api_url"
+            android:defaultValue="http://fleet-api.raven.com"
+            android:title="Api Url"
+            android:summary="Base Api Url"
+            android:dialogTitle="Base Api Url" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

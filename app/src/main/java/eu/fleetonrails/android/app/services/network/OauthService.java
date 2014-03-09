@@ -10,7 +10,6 @@ import retrofit.http.POST;
  * Created by alan on 07/03/2014.
  */
 public interface OauthService {
-    static String serverPath = "http://fleet-api.raven.com";
 
     @FormUrlEncoded
     @POST("/oauth/token")
