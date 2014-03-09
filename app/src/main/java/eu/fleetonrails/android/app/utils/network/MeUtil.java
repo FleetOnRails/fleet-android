@@ -15,7 +15,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Created by alan on 09/03/2014.
+ * Created by alan
+ * on 09/03/2014.
  */
 public class MeUtil {
 

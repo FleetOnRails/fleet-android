@@ -1,7 +1,8 @@
 package eu.fleetonrails.android.app.models;
 
 /**
- * Created by alan on 08/03/2014.
+ * Created by alan Kehoe
+ * on 08/03/2014.
  */
 public class Oauth {
     public String access_token;

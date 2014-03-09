@@ -5,7 +5,8 @@ import retrofit.Callback;
 import retrofit.http.GET;
 
 /**
- * Created by alan on 08/03/2014.
+ * Created by alan Kehoe
+ * on 08/03/2014.
  */
 public interface MeService {
 

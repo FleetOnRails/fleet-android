@@ -1,5 +1,6 @@
 package eu.fleetonrails.android.app.utils.network;
 
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -16,7 +17,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Created by alan on 09/03/2014.
+ * Created by alan Kehoe
+ * on 09/03/2014.
  */
 public class LoginUtil {
 
@@ -37,7 +39,7 @@ public class LoginUtil {
                 username, password, new Callback<Oauth>() {
                     @Override
                     public void success(Oauth oauth, Response response) {
-                        SharedPreferences fleetPreferences = contextWrapper.getSharedPreferences("FleetPreferences", contextWrapper.MODE_PRIVATE);
+                        SharedPreferences fleetPreferences = contextWrapper.getSharedPreferences("FleetPreferences", Context.MODE_PRIVATE);
                         SharedPreferences.Editor prefEditor = fleetPreferences.edit();
                         prefEditor.putString("AccessToken", oauth.access_token);
                         prefEditor.commit();
@@ -50,7 +52,7 @@ public class LoginUtil {
                 }
         );
 
-        SharedPreferences fleetPreferences = contextWrapper.getSharedPreferences("FleetPreferences", contextWrapper.MODE_PRIVATE);
+        SharedPreferences fleetPreferences = contextWrapper.getSharedPreferences("FleetPreferences", Context.MODE_PRIVATE);
         Log.d("Bearer ", fleetPreferences.getString("AccessToken", ""));
     }
 }
