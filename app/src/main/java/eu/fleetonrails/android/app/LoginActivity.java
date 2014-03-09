@@ -9,8 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import eu.fleetonrails.android.app.utils.network.LoginUtil;
-import eu.fleetonrails.android.app.utils.network.MeUtil;
+import eu.fleetonrails.android.app.utils.network.MeUtils;
+import eu.fleetonrails.android.app.utils.network.SessionUtils;
 
 /**
  * Created by alan Kehoe
@@ -42,7 +42,6 @@ public class LoginActivity extends ActionBarActivity {
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
-
     public void sendLogin(View view) {
         Intent intent = new Intent(this, MainActivity.class);
 
@@ -57,8 +56,8 @@ public class LoginActivity extends ActionBarActivity {
             password = uiPassword.getText().toString();
         }
 
-        LoginUtil.login(LoginActivity.this, username, password);
-        MeUtil.index(LoginActivity.this);
+        SessionUtils.userLogin(LoginActivity.this, username, password);
+        MeUtils.index(LoginActivity.this);
 
         startActivity(intent);
     }

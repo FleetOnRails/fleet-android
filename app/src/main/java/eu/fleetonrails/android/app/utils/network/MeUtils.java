@@ -5,7 +5,6 @@ import android.util.Log;
 
 import org.androidannotations.annotations.Background;
 
-import eu.fleetonrails.android.app.models.me.MeAttributes;
 import eu.fleetonrails.android.app.models.me.MeObject;
 import eu.fleetonrails.android.app.services.network.BaseService;
 import eu.fleetonrails.android.app.services.network.MeService;
@@ -18,7 +17,7 @@ import retrofit.client.Response;
  * Created by alan
  * on 09/03/2014.
  */
-public class MeUtil {
+public class MeUtils {
 
     @Background
     public static void index(ContextWrapper contextWrapper) {
@@ -28,13 +27,11 @@ public class MeUtil {
                 .setRequestInterceptor(new HttpInterceptor(contextWrapper))
                 .build();
 
-        MeService service = restAdapter.create(MeService.class);
-        service.getData(new Callback<MeObject>() {
+        MeService meService = restAdapter.create(MeService.class);
+        meService.index(new Callback<MeObject>() {
             @Override
             public void success(MeObject meObject, Response response) {
-                MeAttributes me = meObject.me;
-
-                Log.d("me pojo", me.id + ", " + me.first_name);
+                Log.d("user", meObject.me.first_name);
             }
 
             @Override

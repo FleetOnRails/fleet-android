@@ -11,5 +11,8 @@ import retrofit.http.GET;
 public interface MeService {
 
     @GET("/v1/me")
-    void getData(Callback<MeObject> callback);
+    void index(Callback<MeObject> callback);
+
+    @GET("/v1/me")
+    void ping(Callback<MeObject> callback);
 }
