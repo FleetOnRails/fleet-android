@@ -13,6 +13,7 @@ public interface MeService {
     @GET("/v1/me")
     void index(Callback<MeObject> callback);
 
+//    TODO - Remove redundant service
     @GET("/v1/me")
     void ping(Callback<MeObject> callback);
 }

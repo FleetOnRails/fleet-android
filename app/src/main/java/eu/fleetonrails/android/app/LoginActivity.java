@@ -41,9 +41,8 @@ public class LoginActivity extends ActionBarActivity {
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
+//    TODO - Clean
     public void sendLogin(View view) {
-
-
         EditText uiUsername = (EditText) findViewById(R.id.username);
         EditText uiPassword = (EditText) findViewById(R.id.password);
 
