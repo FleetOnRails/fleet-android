@@ -11,6 +11,7 @@ import android.widget.Toast;
 import org.androidannotations.annotations.Background;
 
 import eu.fleetonrails.android.app.LoginActivity;
+import eu.fleetonrails.android.app.MainActivity;
 import eu.fleetonrails.android.app.models.Oauth;
 import eu.fleetonrails.android.app.models.me.MeObject;
 import eu.fleetonrails.android.app.services.network.BaseService;
@@ -44,12 +45,16 @@ public class SessionUtils {
                 username, password, new Callback<Oauth>() {
                     @Override
                     public void success(Oauth oauth, Response response) {
+                        Intent intent = new Intent(contextWrapper, MainActivity.class);
+
                         SharedPreferences fleetPreferences = contextWrapper.getSharedPreferences("FleetPreferences", Context.MODE_PRIVATE);
                         SharedPreferences.Editor prefEditor = fleetPreferences.edit();
                         prefEditor.putString("AccessToken", oauth.access_token);
                         prefEditor.putString("Refresh Token", oauth.refresh_token);
                         prefEditor.commit();
                         Toast.makeText(contextWrapper, "Logged in!", Toast.LENGTH_LONG).show();
+
+                        contextWrapper.startActivity(intent);
                     }
 
                     @Override
@@ -92,10 +97,15 @@ public class SessionUtils {
 
     @Background
     public static void logout(final ContextWrapper contextWrapper) {
+        Intent intent = new Intent(contextWrapper, LoginActivity.class);
+
         SharedPreferences fleetPreferences = contextWrapper.getSharedPreferences("FleetPreferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor prefEditor = fleetPreferences.edit();
         prefEditor.putString("AccessToken", null);
         prefEditor.putString("Refresh Token", null);
         prefEditor.commit();
+
+        Toast.makeText(contextWrapper, "Logged Out!", Toast.LENGTH_LONG).show();
+        contextWrapper.startActivity(intent);
     }
 }

@@ -1,6 +1,5 @@
 package eu.fleetonrails.android.app;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -43,7 +42,7 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     public void sendLogin(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+
 
         EditText uiUsername = (EditText) findViewById(R.id.username);
         EditText uiPassword = (EditText) findViewById(R.id.password);
@@ -58,7 +57,5 @@ public class LoginActivity extends ActionBarActivity {
 
         SessionUtils.userLogin(LoginActivity.this, username, password);
         MeUtils.index(LoginActivity.this);
-
-        startActivity(intent);
     }
 }
