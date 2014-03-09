@@ -80,11 +80,6 @@ public class SessionUtils {
             public void success(MeObject meObject, Response response) {
                 Toast.makeText(contextWrapper, "Already Logged In!", Toast.LENGTH_LONG).show();
                 Log.d("status", "Already logged in");
-                SharedPreferences fleetPreferences = contextWrapper.getSharedPreferences("FleetPreferences", Context.MODE_PRIVATE);
-                SharedPreferences.Editor prefEditor = fleetPreferences.edit();
-                prefEditor.putString("AccessToken", null);
-                prefEditor.putString("Refresh Token", null);
-                prefEditor.commit();
             }
 
             @Override
@@ -93,5 +88,14 @@ public class SessionUtils {
                 contextWrapper.startActivity(intent);
             }
         });
+    }
+
+    @Background
+    public static void logout(final ContextWrapper contextWrapper) {
+        SharedPreferences fleetPreferences = contextWrapper.getSharedPreferences("FleetPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = fleetPreferences.edit();
+        prefEditor.putString("AccessToken", null);
+        prefEditor.putString("Refresh Token", null);
+        prefEditor.commit();
     }
 }
