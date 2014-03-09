@@ -8,6 +8,7 @@ import android.util.Log;
 import org.androidannotations.annotations.Background;
 
 import eu.fleetonrails.android.app.models.Oauth;
+import eu.fleetonrails.android.app.services.network.BaseService;
 import eu.fleetonrails.android.app.services.network.OauthService;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -21,24 +22,24 @@ public class LoginUtil {
 
     @Background
     public static void login(final ContextWrapper contextWrapper, String username, String password) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contextWrapper.getBaseContext());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(contextWrapper.getBaseContext());
 
         RestAdapter restAdapter;
         restAdapter = new RestAdapter.Builder()
-                .setServer(preferences.getString("base_api_url", ""))
+                .setServer(BaseService.serverPath)
                 .build();
 
         OauthService oauthService = restAdapter.create(OauthService.class);
 
         oauthService.getBearerFromCredentials("password",
-                preferences.getString("oauth_client_id", ""),
-                preferences.getString("oauth_client_secret", ""),
+                sharedPreferences.getString("oauth_client_id", ""),
+                sharedPreferences.getString("oauth_client_secret", ""),
                 username, password, new Callback<Oauth>() {
                     @Override
                     public void success(Oauth oauth, Response response) {
                         SharedPreferences fleetPreferences = contextWrapper.getSharedPreferences("FleetPreferences", contextWrapper.MODE_PRIVATE);
                         SharedPreferences.Editor prefEditor = fleetPreferences.edit();
-                        prefEditor.putString("AccessToken", oauth.getAccess_token());
+                        prefEditor.putString("AccessToken", oauth.access_token);
                         prefEditor.commit();
                     }
 

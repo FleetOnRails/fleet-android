@@ -1,14 +1,13 @@
 package eu.fleetonrails.android.app.utils.network;
 
 import android.content.ContextWrapper;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.androidannotations.annotations.Background;
 
 import eu.fleetonrails.android.app.models.me.MeAttributes;
 import eu.fleetonrails.android.app.models.me.MeObject;
+import eu.fleetonrails.android.app.services.network.BaseService;
 import eu.fleetonrails.android.app.services.network.MeService;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -22,11 +21,9 @@ public class MeUtil {
 
     @Background
     public static void index(ContextWrapper contextWrapper) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contextWrapper.getBaseContext());
-
         RestAdapter restAdapter;
         restAdapter = new RestAdapter.Builder()
-                .setServer(preferences.getString("base_api_url", ""))
+                .setServer(BaseService.serverPath)
                 .setRequestInterceptor(new HttpInterceptor(contextWrapper))
                 .build();
 
