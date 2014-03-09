@@ -11,9 +11,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import org.androidannotations.annotations.Background;
+
 import eu.fleetonrails.android.app.models.Oauth;
+import eu.fleetonrails.android.app.models.me.MeAttributes;
+import eu.fleetonrails.android.app.models.me.MeObject;
+import eu.fleetonrails.android.app.services.network.MeService;
 import eu.fleetonrails.android.app.services.network.OauthService;
 import retrofit.Callback;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -27,8 +33,6 @@ public class LoginActivity extends ActionBarActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        login("alan", "fleetonrails");
     }
 
 
@@ -52,6 +56,42 @@ public class LoginActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Background
+    public void getMe() {
+        SharedPreferences fleetPreferences = getSharedPreferences("FleetPreferences", MODE_PRIVATE);
+        final String bearer = fleetPreferences.getString("AccessToken", "");
+
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("Authorization", "Bearer " + bearer);
+                request.addHeader("Accept", "application/json");
+                request.addHeader("Content-Type", "application/json");
+            }
+        };
+
+        RestAdapter restAdapter;
+        restAdapter = new RestAdapter.Builder()
+                .setServer(MeService.serverPath)
+                .setRequestInterceptor(requestInterceptor)
+                .build();
+
+        MeService service = restAdapter.create(MeService.class);
+        service.getData(new Callback<MeObject>() {
+            @Override
+            public void success(MeObject meObject, Response response) {
+                MeAttributes me = meObject.me; // Get first element from arraylist
+
+                Log.d("me pojo", me.id + ", " + me.first_name);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Error", error.toString());
+            }
+        });
+    }
+
     public void sendLogin(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         EditText usernameText = (EditText) findViewById(R.id.username);
@@ -61,9 +101,12 @@ public class LoginActivity extends ActionBarActivity {
         String password = passwordText.getText().toString();
 
         login(username, password);
+        getMe();
+
         startActivity(intent);
     }
 
+    @Background
     public void login(String username, String password) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 

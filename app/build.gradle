@@ -29,6 +29,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:19.0.1'
     compile 'pt.lighthouselabs.obd:obd-java-api:0.3'
     compile 'com.squareup.retrofit:retrofit:1.3.0'
+    compile 'org.roboguice:roboguice:2.0'
     apt "org.androidannotations:androidannotations:${androidAnnotationsVersion}"
     compile "org.androidannotations:androidannotations-api:${androidAnnotationsVersion}"
 
