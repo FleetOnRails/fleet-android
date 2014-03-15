@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import eu.fleetonrails.android.app.utils.network.CarUtils;
 import eu.fleetonrails.android.app.utils.network.SessionUtils;
 
 /**
@@ -23,6 +24,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         SessionUtils.isLoggedIn(this);
+
+        CarUtils.index(MainActivity.this);
     }
 
     @Override
