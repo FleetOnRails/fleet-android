@@ -8,4 +8,8 @@ import java.util.ArrayList;
  */
 public class CarList {
     public ArrayList<CarObject> cars;
+
+    public ArrayList<CarObject> getCars() {
+        return cars;
+    }
 }

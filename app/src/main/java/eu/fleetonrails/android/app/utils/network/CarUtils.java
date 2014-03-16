@@ -3,8 +3,11 @@ package eu.fleetonrails.android.app.utils.network;
 import android.content.ContextWrapper;
 import android.util.Log;
 
+import com.activeandroid.ActiveAndroid;
+
 import org.androidannotations.annotations.Background;
 
+import eu.fleetonrails.android.app.models.ObjectStore;
 import eu.fleetonrails.android.app.models.car.CarList;
 import eu.fleetonrails.android.app.models.car.CarObject;
 import eu.fleetonrails.android.app.services.network.BaseService;
@@ -21,6 +24,8 @@ import retrofit.client.Response;
 public class CarUtils {
     @Background
     public static void index(ContextWrapper contextWrapper) {
+        ActiveAndroid.initialize(contextWrapper);
+
         RestAdapter restAdapter;
         restAdapter = new RestAdapter.Builder()
                 .setServer(BaseService.serverPath)
@@ -32,8 +37,8 @@ public class CarUtils {
 
             @Override
             public void success(CarList carList, Response response) {
-                for (CarObject carObject : carList.cars) {
-                    Log.d("car", carObject.car.make);
+                for (CarObject carObject : carList.getCars()) {
+                    ObjectStore.addCarObject(carObject);
                 }
             }
 

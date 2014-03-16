@@ -6,4 +6,8 @@ package eu.fleetonrails.android.app.models.car;
  */
 public class CarObject {
     public CarAttributes car;
+
+    public CarAttributes getCar() {
+        return car;
+    }
 }

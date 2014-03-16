@@ -7,6 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+
+import eu.fleetonrails.android.app.models.ObjectStore;
+import eu.fleetonrails.android.app.models.car.CarObject;
 import eu.fleetonrails.android.app.utils.network.CarUtils;
 import eu.fleetonrails.android.app.utils.network.SessionUtils;
 
@@ -23,9 +27,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SessionUtils.isLoggedIn(this);
-
-        CarUtils.index(MainActivity.this);
+        SessionUtils.isLoggedIn(MainActivity.this);
+        CarUtils.index(this);
     }
 
     @Override
@@ -47,5 +50,9 @@ public class MainActivity extends ActionBarActivity {
 
     public void logout(View view) {
         SessionUtils.logout(MainActivity.this);
+    }
+
+    public void getCars(View view) {
+        ArrayList<CarObject> carObjects = ObjectStore.getCarObjects();
     }
 }
