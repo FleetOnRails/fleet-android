@@ -37,15 +37,32 @@ public class CarListAdapter extends ArrayAdapter<CarObject> {
         CarObject carObject = carObjects.get(position);
 
         if (carObject != null) {
-            TextView make = (TextView) view.findViewById(R.id.make);
-            TextView model = (TextView) view.findViewById(R.id.model);
+            TextView tt = (TextView) view.findViewById(R.id.toptext);
+            TextView ttd = (TextView) view.findViewById(R.id.toptextdata);
+            TextView mt = (TextView) view.findViewById(R.id.middletext);
+            TextView mtd = (TextView) view.findViewById(R.id.middletextdata);
+            TextView bt = (TextView) view.findViewById(R.id.bottomtext);
+            TextView btd = (TextView) view.findViewById(R.id.desctext);
 
-            if (make != null) {
-                make.setText(carObject.getCar().getMake() + " ");
+            // check to see if each individual textview is null.
+            // if not, assign some text!
+            if (tt != null){
+                tt.setText("Reg: ");
             }
-
-            if (model != null) {
-                model.setText(carObject.getCar().getModel());
+            if (ttd != null){
+                ttd.setText(carObject.getCar().getRegistration());
+            }
+            if (mt != null){
+                mt.setText("Make: ");
+            }
+            if (mtd != null){
+                mtd.setText(carObject.getCar().getMake());
+            }
+            if (bt != null){
+                bt.setText("Model: ");
+            }
+            if (btd != null){
+                btd.setText(carObject.getCar().getModel());
             }
         }
 
