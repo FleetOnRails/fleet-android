@@ -84,7 +84,7 @@ public class SessionUtils {
             @Override
             public void success(MeObject meObject, Response response) {
                 Toast.makeText(contextWrapper, "Already Logged In!", Toast.LENGTH_LONG).show();
-                Log.d("status", "Already logged in");
+//                Log.d("status", "Already logged in");
             }
 
             @Override

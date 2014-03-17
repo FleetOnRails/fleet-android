@@ -1,17 +1,14 @@
 package eu.fleetonrails.android.app;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.ArrayList;
-
-import eu.fleetonrails.android.app.models.ObjectStore;
-import eu.fleetonrails.android.app.models.car.CarObject;
-import eu.fleetonrails.android.app.utils.network.CarUtils;
 import eu.fleetonrails.android.app.utils.network.SessionUtils;
 
 /**
@@ -19,16 +16,17 @@ import eu.fleetonrails.android.app.utils.network.SessionUtils;
  * on 08/03/2014.
  */
 public class MainActivity extends ActionBarActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Check if logged in
         SessionUtils.isLoggedIn(MainActivity.this);
-        CarUtils.index(this);
     }
 
     @Override
@@ -52,7 +50,8 @@ public class MainActivity extends ActionBarActivity {
         SessionUtils.logout(MainActivity.this);
     }
 
-    public void getCars(View view) {
-        ArrayList<CarObject> carObjects = ObjectStore.getCarObjects();
+    public void listCars(View view) {
+        Intent intent = new Intent(this, ListCarActivity.class);
+        startActivity(intent);
     }
 }
