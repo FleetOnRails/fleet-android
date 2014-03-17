@@ -102,7 +102,12 @@ public class TrackingActivity extends ActionBarActivity implements LocationListe
         String str = "Latitude: " + location.getLatitude() + "Longitude:" + location.getLongitude();
 
         Toast.makeText(getBaseContext(), str, Toast.LENGTH_LONG).show();
-        GpsStatisticUtils.create(location.getLatitude(), location.getLongitude(), 0.0, id, TrackingActivity.this);
+        GpsStatisticUtils.create(
+                location.getLatitude(),
+                location.getLongitude(),
+                location.getSpeed(),
+                id,
+                TrackingActivity.this);
     }
 
     @Override
