@@ -35,6 +35,10 @@
             android:name="eu.fleetonrails.android.app.ListCarActivity"
             android:label="@string/title_activity_list_car" >
         </activity>
+        <activity
+            android:name="eu.fleetonrails.android.app.TrackingActivity"
+            android:label="@string/title_activity_tracking" >
+        </activity>
     </application>
 
 </manifest>

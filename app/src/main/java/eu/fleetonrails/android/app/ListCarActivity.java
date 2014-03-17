@@ -1,12 +1,12 @@
 package eu.fleetonrails.android.app;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,14 @@ public class ListCarActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         CarObject selectedValue = (CarObject) getListAdapter().getItem(position);
-        Toast.makeText(this, selectedValue.getCar().getMake(), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, TrackingActivity.class);
+        intent.putExtra("Make", selectedValue.getCar().getMake());
+        intent.putExtra("Model", selectedValue.getCar().getModel());
+        intent.putExtra("Registration", selectedValue.getCar().getRegistration());
+        intent.putExtra("ID", selectedValue.getCar().getId());
+
+        startActivity(intent);
     }
 }
 

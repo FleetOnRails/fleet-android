@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_list_car">ListCarActivity</string>
+    <string name="title_activity_tracking">TrackingActivity</string>
 
 </resources>

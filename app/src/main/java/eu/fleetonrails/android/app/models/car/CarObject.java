@@ -10,8 +10,4 @@ public class CarObject {
     public CarAttributes getCar() {
         return car;
     }
-
-    public String toString() {
-        return car.getId() + " " + car.getRegistration();
-    }
 }
