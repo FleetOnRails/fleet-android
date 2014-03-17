@@ -1,8 +1,9 @@
 package eu.fleetonrails.android.app;
 
+import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -11,13 +12,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import eu.fleetonrails.android.app.utils.network.GpsStatisticUtils;
 
 
-public class TrackingActivity extends ActionBarActivity {
+public class TrackingActivity extends ActionBarActivity implements LocationListener {
     private String make, model, registration;
     private int id;
+
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,9 @@ public class TrackingActivity extends ActionBarActivity {
 
         updateView();
 
-        getLocation();
+        /********** get Gps location service LocationManager object ***********/
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 10, this);
     }
 
 
@@ -91,38 +97,28 @@ public class TrackingActivity extends ActionBarActivity {
         }
     }
 
-    public void getLocation() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String bestProvider = locationManager.getBestProvider(criteria, false);
-        final Location location = locationManager.getLastKnownLocation(bestProvider);
+    @Override
+    public void onLocationChanged(Location location) {
+        String str = "Latitude: " + location.getLatitude() + "Longitude:" + location.getLongitude();
 
-        new Thread(new Runnable() {
-            public void run() {
-                while (true) {
-                    double latitude = 0.0;
-                    double longitude = 0.0;
-                    double speed;
-                    if (location.hasSpeed()) {
-                        speed = location.getSpeed();
-                    } else {
-                        speed = 0.0;
-                    }
-                    try {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
+        Toast.makeText(getBaseContext(), str, Toast.LENGTH_LONG).show();
+        GpsStatisticUtils.create(location.getLatitude(), location.getLongitude(), 0.0, id, TrackingActivity.this);
+    }
 
-                    GpsStatisticUtils.create(latitude, longitude, speed, id, TrackingActivity.this);
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        /******** Called when User on Gps  *********/
+        Toast.makeText(getBaseContext(), "Gps turned on ", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        /******** Called when User off Gps *********/
+        Toast.makeText(getBaseContext(), "Gps turned off ", Toast.LENGTH_LONG).show();
     }
 }
