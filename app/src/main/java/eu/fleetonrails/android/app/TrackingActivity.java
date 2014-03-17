@@ -1,28 +1,18 @@
 package eu.fleetonrails.android.app;
 
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.squareup.okhttp.OkHttpClient;
-
-import eu.fleetonrails.android.app.models.gps_statistics.GpsStatisticAttributes;
-import eu.fleetonrails.android.app.models.gps_statistics.GpsStatisticObject;
-import eu.fleetonrails.android.app.models.gps_statistics.LocationAttributes;
-import eu.fleetonrails.android.app.services.network.BaseService;
-import eu.fleetonrails.android.app.services.network.GpsStatisticService;
-import eu.fleetonrails.android.app.utils.network.HttpInterceptor;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.OkClient;
-import retrofit.client.Response;
+import eu.fleetonrails.android.app.utils.network.GpsStatisticUtils;
 
 
 public class TrackingActivity extends ActionBarActivity {
@@ -47,7 +37,8 @@ public class TrackingActivity extends ActionBarActivity {
         id = intent.getExtras().getInt("ID");
 
         updateView();
-        sendStat();
+
+        getLocation();
     }
 
 
@@ -100,38 +91,38 @@ public class TrackingActivity extends ActionBarActivity {
         }
     }
 
-    public void sendStat() {
-        LocationAttributes locationAttributes = new LocationAttributes();
-        locationAttributes.setLatitude(52.676181);
-        locationAttributes.setLongitude(-6.289091);
+    public void getLocation() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String bestProvider = locationManager.getBestProvider(criteria, false);
+        final Location location = locationManager.getLastKnownLocation(bestProvider);
 
-        GpsStatisticAttributes gpsStatisticAttributes = new GpsStatisticAttributes();
-        gpsStatisticAttributes.setKmh(65.4);
-        gpsStatisticAttributes.setLocation_attributes(locationAttributes);
+        new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    double latitude = 0.0;
+                    double longitude = 0.0;
+                    double speed;
+                    if (location.hasSpeed()) {
+                        speed = location.getSpeed();
+                    } else {
+                        speed = 0.0;
+                    }
+                    try {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
 
-        GpsStatisticObject gpsStatisticObject = new GpsStatisticObject();
-        gpsStatisticObject.setGps_statistic(gpsStatisticAttributes);
-
-        OkHttpClient client = new OkHttpClient();
-
-        RestAdapter restAdapter;
-        restAdapter = new RestAdapter.Builder()
-                .setServer(BaseService.serverPath)
-                .setRequestInterceptor(new HttpInterceptor(TrackingActivity.this))
-                .setClient(new OkClient(client))
-                .build();
-
-        GpsStatisticService gpsStatisticService = restAdapter.create(GpsStatisticService.class);
-        gpsStatisticService.create(id, gpsStatisticObject, new Callback<GpsStatisticObject>() {
-            @Override
-            public void success(GpsStatisticObject gpsStatisticObject, Response response) {
-                Log.d("gps", "hello");
+                    GpsStatisticUtils.create(latitude, longitude, speed, id, TrackingActivity.this);
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Error", error.toString());
-            }
-        });
+        }).start();
     }
 }
