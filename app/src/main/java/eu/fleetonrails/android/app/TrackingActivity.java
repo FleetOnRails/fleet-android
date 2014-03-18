@@ -99,9 +99,14 @@ public class TrackingActivity extends ActionBarActivity implements LocationListe
 
     @Override
     public void onLocationChanged(Location location) {
-        String str = "Latitude: " + location.getLatitude() + "Longitude:" + location.getLongitude();
+        TextView latitudeView = (TextView) findViewById(R.id.latitudeView);
+        TextView longitudeView = (TextView) findViewById(R.id.longitudeView);
+        TextView speedView = (TextView) findViewById(R.id.speedView);
 
-        Toast.makeText(getBaseContext(), str, Toast.LENGTH_LONG).show();
+        latitudeView.setText("Lat: " + location.getLatitude());
+        longitudeView.setText("Lon: " + location.getLongitude());
+        speedView.setText("Speed: " + location.getSpeed() * 3.6 + "km/h");
+
         GpsStatisticUtils.create(
                 location.getLatitude(),
                 location.getLongitude(),
