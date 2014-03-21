@@ -9,7 +9,6 @@ import org.androidannotations.annotations.Background;
 
 import eu.fleetonrails.android.app.models.gps_statistics.GpsStatisticAttributes;
 import eu.fleetonrails.android.app.models.gps_statistics.GpsStatisticObject;
-import eu.fleetonrails.android.app.models.gps_statistics.LocationAttributes;
 import eu.fleetonrails.android.app.services.network.BaseService;
 import eu.fleetonrails.android.app.services.network.GpsStatisticService;
 import retrofit.Callback;
@@ -26,16 +25,13 @@ public class GpsStatisticUtils {
 
     @Background
     public static void create(double latitude, double longitude, double speed, int id, ContextWrapper contextWrapper) {
-        LocationAttributes locationAttributes = new LocationAttributes();
-        locationAttributes.setLatitude(latitude);
-        locationAttributes.setLongitude(longitude);
-
         GpsStatisticAttributes gpsStatisticAttributes = new GpsStatisticAttributes();
-        gpsStatisticAttributes.setKmh(speed);
-        gpsStatisticAttributes.setLocation_attributes(locationAttributes);
+        gpsStatisticAttributes.kmh = speed;
+        gpsStatisticAttributes.latitude = latitude;
+        gpsStatisticAttributes.longitude = longitude;
 
         GpsStatisticObject gpsStatisticObject = new GpsStatisticObject();
-        gpsStatisticObject.setGps_statistic(gpsStatisticAttributes);
+        gpsStatisticObject.gps_statistic = gpsStatisticAttributes;
 
         OkHttpClient client = new OkHttpClient();
 

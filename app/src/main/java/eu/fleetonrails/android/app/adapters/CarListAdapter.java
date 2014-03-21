@@ -50,19 +50,19 @@ public class CarListAdapter extends ArrayAdapter<CarObject> {
                 tt.setText("Reg: ");
             }
             if (ttd != null){
-                ttd.setText(carObject.getCar().getRegistration());
+                ttd.setText(carObject.car.registration);
             }
             if (mt != null){
                 mt.setText("Make: ");
             }
             if (mtd != null){
-                mtd.setText(carObject.getCar().getMake());
+                mtd.setText(carObject.car.make);
             }
             if (bt != null){
                 bt.setText("Model: ");
             }
             if (btd != null){
-                btd.setText(carObject.getCar().getModel());
+                btd.setText(carObject.car.model);
             }
         }
 

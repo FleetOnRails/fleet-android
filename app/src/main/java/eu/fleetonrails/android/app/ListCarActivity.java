@@ -41,10 +41,10 @@ public class ListCarActivity extends ListActivity {
         CarObject selectedValue = (CarObject) getListAdapter().getItem(position);
 
         Intent intent = new Intent(this, TrackingActivity.class);
-        intent.putExtra("Make", selectedValue.getCar().getMake());
-        intent.putExtra("Model", selectedValue.getCar().getModel());
-        intent.putExtra("Registration", selectedValue.getCar().getRegistration());
-        intent.putExtra("ID", selectedValue.getCar().getId());
+        intent.putExtra("Make", selectedValue.car.make);
+        intent.putExtra("Model", selectedValue.car.model);
+        intent.putExtra("Registration", selectedValue.car.registration);
+        intent.putExtra("ID", selectedValue.car.id);
 
         startActivity(intent);
     }

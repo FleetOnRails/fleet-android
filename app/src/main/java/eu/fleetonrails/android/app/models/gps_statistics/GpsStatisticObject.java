@@ -6,12 +6,4 @@ package eu.fleetonrails.android.app.models.gps_statistics;
  */
 public class GpsStatisticObject {
     public GpsStatisticAttributes gps_statistic;
-
-    public GpsStatisticAttributes getGps_statistic() {
-        return gps_statistic;
-    }
-
-    public void setGps_statistic(GpsStatisticAttributes gps_statistic) {
-        this.gps_statistic = gps_statistic;
-    }
 }
