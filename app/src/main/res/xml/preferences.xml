@@ -6,14 +6,14 @@
 
         <EditTextPreference
             android:key="oauth_client_id"
-            android:defaultValue="bb44bd52efb7af50e9b12a14ab9b5059f9650ed0fad04f29e1dc0838a3655492"
+            android:defaultValue="054438c20e13fa64265e2e206bfc537b16b9688bea91503ccac5e0175c762e4c"
             android:title="Client ID"
             android:summary="Client ID for OAuth"
             android:dialogTitle="Client ID for OAuth" />
 
         <EditTextPreference
             android:key="oauth_client_secret"
-            android:defaultValue="25ad5c1ecb760bb859fb96def8a72e506b9e73fb040b7208c88292e16cbb2a70"
+            android:defaultValue="1f7dcb90a80ad3255542716c79b4ad4d9bcbf7d479e7980f020f116daa836485"
             android:title="Client Secret"
             android:summary="Client Secret for OAuth"
             android:dialogTitle="Client Secret for OAuth" />
