@@ -4,4 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="eu.fleetonrails.android.app.MainActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/linearLayout"
+        android:layout_gravity="center_horizontal|top"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:id="@+id/logout_button"
+            android:clickable="true"
+            android:enabled="true"
+            android:onClick="logout" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="List Cars"
+            android:id="@+id/list_cars_button"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:enabled="true"
+            android:onClick="listCars" />
+
+    </LinearLayout>
+</FrameLayout>

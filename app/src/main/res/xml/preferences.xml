@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="OBD Preferences">
+
+        <EditTextPreference
+            android:key="oauth_client_id"
+            android:defaultValue="c22249496208492fcd48dae8ea1925dc37fc2596a724f07e1bafeaff34be9602"
+            android:title="Client ID"
+            android:summary="Client ID for OAuth"
+            android:dialogTitle="Client ID for OAuth" />
+
+        <EditTextPreference
+            android:key="oauth_client_secret"
+            android:defaultValue="2a99e236bffd8f83282207683bc726e757f5caa913dd414a267b9a8f86bc2d13"
+            android:title="Client Secret"
+            android:summary="Client Secret for OAuth"
+            android:dialogTitle="Client Secret for OAuth" />
+
+        <EditTextPreference
+            android:key="base_api_url"
+            android:defaultValue="http://fleet-api.raven.com"
+            android:title="Api Url"
+            android:summary="Base Api Url"
+            android:dialogTitle="Base Api Url" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
