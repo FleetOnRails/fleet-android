@@ -84,12 +84,13 @@ public class SessionUtils {
             @Override
             public void success(MeObject meObject, Response response) {
                 Toast.makeText(contextWrapper, "Already Logged In!", Toast.LENGTH_LONG).show();
-//                Log.d("status", "Already logged in");
+                Log.d("status", "Already logged in");
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Intent intent = new Intent(contextWrapper, LoginActivity.class);
+                Log.d("status", "Failed to log in");
                 contextWrapper.startActivity(intent);
             }
         });
