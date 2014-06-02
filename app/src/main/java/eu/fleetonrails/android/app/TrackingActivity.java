@@ -110,7 +110,7 @@ public class TrackingActivity extends ActionBarActivity implements LocationListe
         GpsStatisticUtils.create(
                 location.getLatitude(),
                 location.getLongitude(),
-                location.getSpeed(),
+                location.getSpeed() * 3.6,
                 id,
                 TrackingActivity.this);
     }
